@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <readline/history.h>
+#include <readline/readline.h>
 
 /* Declare a buffer for user input of size 2048 */
 static char input[2048];
@@ -11,14 +14,19 @@ int main(int argc, char** argv)
 
     while (1)
     {
-        /* Output prompt */
-        fputs("small_lisp> ", stdout);
+        char *input = readline ("> ");       
 
-        /* Read input from user, max size 2048 */
-        fgets(input, 2048, stdin);
+        /* Output prompt and get input from user*/
+        //char* el_gets(*e, *count);
+
+        /* add input to history */
+        //add_history(input);
 
         /* Output test string */
         printf("Hey, it's working. This is your input: %s", input);
+
+        /* free the memory */
+        free(input);
     }
 
     return 0;
