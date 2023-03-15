@@ -16,8 +16,11 @@ int main(int argc, char** argv)
     {
         char *input = readline ("small_lisp> ");
 
-        /* add input to history */
-        add_history(input);
+        /* add non empty line to history */
+        if (*input)
+        {
+            add_history(input);
+        }
 
         /* Output test string */
         printf("Hey, it's working. This is your input: %s\n", input);
