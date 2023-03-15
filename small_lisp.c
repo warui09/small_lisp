@@ -9,6 +9,7 @@ static char input[2048];
 int main(int argc, char** argv)
 {
     /* Print version and Exit information*/
+    /* will add later pre-processor instructions to allow for compilation on Windows */
     puts("small_lisp version 1.0");
     puts("Press Ctrl+c to exit");
 
