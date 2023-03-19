@@ -1,2 +1,2 @@
-small_lisp: small_lisp.c -lreadline
-	gcc small_lisp.c -lreadline -o small_lisp
+parsing: parsing.c -lreadline mpc.c -lm
+	gcc -std=c99 -Wall parsing.c mpc.c -lreadline -lm -o parsing
