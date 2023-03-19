@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "mpc.h"
 #include <readline/history.h>
 #include <readline/readline.h>
 
