@@ -9,6 +9,21 @@ static char input[2048];
 
 int main(int argc, char** argv)
 {
+    /* create parsers */
+    mpc_parser_t *Number = mpc_new("number");
+    mpc_parser_t *Operator = mpc_new("operator");
+    mpc_parser_t *Expr = mpc_new("expr");
+    mpc_parser_t *Small_lisp = mpc_new("small_lisp");
+
+    /* define the parsers with the following language */
+    mpca_lang(MPCA_LANG_DEFAULT,
+    "                                                   \
+        number : /-?[0-9]+/;                            \
+        operator : '+' | '-' | '*' | '/' ;              \
+        expr : <number> | '(' <expr> <operator> <expr> ')' ;  \
+        small_lisp: /^/ <expr> <operator> <expr> /$/ ;   \
+        ",
+        Number, Operator, Expr, Small_lisp);
     /* Print version and Exit information*/
     /* will add later pre-processor instructions to allow for compilation on Windows */
     puts("small_lisp version 1.0");
@@ -30,6 +45,9 @@ int main(int argc, char** argv)
         /* free the memory */
         free(input);
     }
+    
+    /* undefine and delete parsers*/
+    mpc_cleanup(4, Number, Operator, Expr, Small_lisp);
 
     return 0;
     
