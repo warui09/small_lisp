@@ -39,8 +39,20 @@ int main(int argc, char** argv)
             add_history(input);
         }
 
-        /* Output test string */
-        printf("Hey, it's working. This is your input: %s\n", input);
+        /* Attempt to parse the user input */
+        mpc_result_t r;
+        if (mpc_parse("<stdin>", input, Small_lisp, &r))
+        {
+            /* On success print the AST */
+            mpc_ast_print(r.output);
+            mpc_ast_delete(r.output);
+        }
+        else
+        {
+            /* Otherwise print the error */
+            mpc_err_print(r.output);
+            mpc_err_delete(r.output);
+        }
 
         /* free the memory */
         free(input);
