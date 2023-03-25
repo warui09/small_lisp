@@ -4,9 +4,6 @@
 #include <readline/history.h>
 #include <readline/readline.h>
 
-/* Declare a buffer for user input of size 2048 */
-static char input[2048];
-
 int main(int argc, char** argv)
 {
     /* create parsers */
@@ -31,7 +28,7 @@ int main(int argc, char** argv)
 
     while (1)
     {
-        char *input = readline ("small_lisp> ");
+        char *input = readline("small_lisp> ");
 
         /* add non empty line to history */
         if (*input)
@@ -39,28 +36,32 @@ int main(int argc, char** argv)
             add_history(input);
         }
 
-        /* Attempt to parse the user input */
+        /* Load AST from output */
         mpc_result_t r;
+
+        /* Parse the user input */
         if (mpc_parse("<stdin>", input, Small_lisp, &r))
         {
             /* On success print the AST */
-            mpc_ast_print(r.output);
-            mpc_ast_delete(r.output);
+            mpc_ast_t *a = r.output;
+            mpc_ast_print(a);
+            mpc_ast_delete(a);
         }
         else
         {
-            /* Otherwise print the error */
-            mpc_err_print(r.output);
-            mpc_err_delete(r.output);
+            /* Print the error */
+            mpc_err_print(r.error);
+            mpc_err_delete(r.error);
         }
 
         /* free the memory */
         free(input);
     }
-    
+
     /* undefine and delete parsers*/
     mpc_cleanup(4, Number, Operator, Expr, Small_lisp);
 
     return 0;
-    
 }
+
+
